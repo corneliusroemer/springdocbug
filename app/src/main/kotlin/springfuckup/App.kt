@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @Tag(name = "Hello World", description = "Simple Hello World endpoint")
 class App {
-
     @Operation(description = "Passing a string works")
     @PostMapping("/string-works", consumes = ["multipart/form-data"])
     fun string(
@@ -38,7 +37,6 @@ class App {
     ): String {
         return "Received file mapping with ${fileMapping.size} entries"
     }
-
 }
 
 fun main(args: Array<String>) {
