@@ -10,26 +10,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.web.bind.annotation.*
 
-// Typealias to reproduce the bug
-typealias FileMappingPayload = Map<String, Any>
-
 @SpringBootApplication
 @RestController
 @Tag(name = "Hello World", description = "Simple Hello World endpoint")
 class App {
 
-    @Operation(description = "Simple endpoint with file mapping")
-    @ApiResponse(responseCode = "200", description = "Success")
-    @PostMapping("/submit", consumes = ["multipart/form-data"])
-    fun submit(
+    @Operation(description = "Passing a string works")
+    @PostMapping("/string-works", consumes = ["multipart/form-data"])
+    fun string(
         @Parameter(
             description = "A JSON object for file mapping",
             required = true,
-            content = [Content(
-                mediaType = "application/json"
-            )]
         )
-        @RequestPart fileMapping: FileMappingPayload,
+        @RequestPart fileMapping: String,
+    ): String {
+        return "Received file mapping with length ${fileMapping.length}"
+    }
+
+    @Operation(description = "Passing a map works")
+    @PostMapping("/map-works", consumes = ["multipart/form-data"])
+    fun map(
+        @Parameter(
+            description = "A JSON object for file mapping",
+            required = true,
+        )
+        @RequestPart fileMapping: Map<String, Any>,
     ): String {
         return "Received file mapping with ${fileMapping.size} entries"
     }
