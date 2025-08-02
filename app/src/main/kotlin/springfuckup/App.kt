@@ -56,18 +56,26 @@ class App {
         @Parameter(
             description = "Metadata as a concrete class",
             required = true,
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = MetaData::class)
+            )]
         )
         @RequestPart metadata: MetaData,
     ): String {
         return "Received metadata: ${metadata.name} = ${metadata.value}"
     }
 
-    @Operation(description = "Passing an interface works")
+    @Operation(description = "Passing an interface works with proper content type")
     @PostMapping("/interface-test", consumes = ["multipart/form-data"])
     fun interfaceTest(
         @Parameter(
             description = "Payload as an interface",
             required = true,
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = PayloadData::class)
+            )]
         )
         @RequestPart payload: PayloadData,
     ): String {
