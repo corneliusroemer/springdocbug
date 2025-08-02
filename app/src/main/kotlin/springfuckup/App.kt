@@ -27,7 +27,7 @@ class App {
         return "Received file mapping with length ${fileMapping.length}"
     }
 
-    @Operation(description = "Passing a map works")
+    @Operation(description = "Passing a map doesn't work")
     @PostMapping("/map-works", consumes = ["multipart/form-data"])
     fun map(
         @Parameter(
